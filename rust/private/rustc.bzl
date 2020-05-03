@@ -330,6 +330,10 @@ def rustc_compile_action(
     else:
         formatted_version = ""
 
+    # Update environment with user provided variables.
+    if hasattr(ctx.attr, "rustc_env"):
+        env.update(ctx.attr.rustc_env)
+
     ctx.actions.run_shell(
         command = command,
         inputs = compile_inputs,

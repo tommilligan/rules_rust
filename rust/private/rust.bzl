@@ -288,6 +288,11 @@ _rust_common_attrs = {
             These are other `rust_library` targets and will be presented as the new name given.
         """),
     ),
+    "rustc_env": attr.string_dict(
+        doc = _tidy("""
+            Dictionary of additional `"key": "value"` environment variables to set for rustc.
+        """),
+    ),
     "crate_features": attr.string_list(
         doc = _tidy("""
             List of features to enable for this crate.

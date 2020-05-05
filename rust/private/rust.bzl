@@ -687,6 +687,27 @@ Run the test with `bazel build //hello_lib:hello_lib_test`.
 """,
 )
 
+rust_test_binary = rule(
+    _rust_test_impl,
+    attrs = dict(_rust_common_attrs.items() +
+                 _rust_test_attrs.items()),
+    executable = True,
+    fragments = ["cpp"],
+    host_fragments = ["cpp"],
+    toolchains = [
+        "@io_bazel_rules_rust//rust:toolchain",
+        "@bazel_tools//tools/cpp:toolchain_type",
+    ],
+    doc = """
+Builds a Rust test crate, without marking it as testable.
+
+See `rust_test` for examples.
+
+This should only be used if you want to run a test binary wrapped in another
+test rule.
+""",
+)
+
 rust_benchmark = rule(
     _rust_benchmark_impl,
     attrs = _rust_common_attrs,

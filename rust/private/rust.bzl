@@ -124,6 +124,7 @@ def _rust_library_impl(ctx):
             aliases = ctx.attr.aliases,
             output = rust_lib,
             edition = _get_edition(ctx, toolchain),
+            rustc_env = ctx.attr.rustc_env,
         ),
         output_hash = output_hash,
     )
@@ -149,6 +150,7 @@ def _rust_binary_impl(ctx):
             aliases = ctx.attr.aliases,
             output = output,
             edition = _get_edition(ctx, toolchain),
+            rustc_env = ctx.attr.rustc_env,
         ),
     )
 
@@ -175,6 +177,7 @@ def _rust_test_common(ctx, test_binary):
             aliases = ctx.attr.aliases,
             output = test_binary,
             edition = crate.edition,
+            rustc_env = ctx.attr.rustc_env,
         )
     elif len(ctx.attr.deps) == 1 and len(ctx.files.srcs) == 0:
         dep = ctx.attr.deps[0].label
@@ -194,6 +197,7 @@ def _rust_test_common(ctx, test_binary):
             aliases = ctx.attr.aliases,
             output = test_binary,
             edition = _get_edition(ctx, toolchain),
+            rustc_env = ctx.attr.rustc_env,
         )
 
     return rustc_compile_action(

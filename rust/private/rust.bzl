@@ -706,6 +706,8 @@ rust_test_binary = rule(
     doc = """
 Builds a Rust test binary, without marking this rule as a Bazel test.
 
+**Warning**: This rule is currently experimental.
+
 This should be used when you want to run the test binary from a different test
 rule (such as [`sh_test`](https://docs.bazel.build/versions/master/be/shell.html#sh_test)),
 and know that running the test binary directly will fail.

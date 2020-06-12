@@ -448,6 +448,7 @@ def rust_repository_set(
         version,
         exec_triple,
         extra_target_triples = [],
+        default_target_triple = None,
         iso_date = None,
         rustfmt_version = None,
         edition = None):
@@ -487,8 +488,16 @@ def rust_repository_set(
         toolchain_name_prefix = DEFAULT_TOOLCHAIN_NAME_PREFIX,
     )
 
+    all_target_triples = [exec_triple] + extra_target_triples
+
+    # If a default triple is set, move it to the front of the list
+    # This will register it first, and make it the default for compilation
+    if default_target_triple:
+        all_target_triples.pop(all_target_triples.index(default_target_triple))
+        all_target_triples = [default_target_triple] + all_target_triples
+
     all_toolchain_names = []
-    for target_triple in [exec_triple] + extra_target_triples:
+    for target_triple in all_target_triples:
         all_toolchain_names.append("@{name}_toolchains//:{toolchain_name_prefix}_{triple}".format(
             name = name,
             toolchain_name_prefix = DEFAULT_TOOLCHAIN_NAME_PREFIX,
